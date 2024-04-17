@@ -1,9 +1,14 @@
+<script>
+
+	import { storeUserID } from "../user/userStore";
+
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LitLink</title>
+    <title>Book Social</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -88,7 +93,11 @@
             color: #555;
             margin: 0;
         }
-
+        img {
+            max-width: 40%;
+            height: auto;
+            margin-top: 20px;
+        } 
         .modal-body {
             font-family: Arial, sans-serif;
             background-color: #e8e3e3;
@@ -132,13 +141,15 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="logo" >LitLink</h1>
+        <h1 class="logo">Book Social</h1>
         <p class="headline">Connect with fellow book lovers.</p>
         <div class="cta-buttons">
             <button class="cta-button" data-bs-toggle="modal" data-bs-target="#signupModal">Sign Up</button>
             <button class="cta-button" data-bs-toggle="modal" data-bs-target="#signinModal">Sign In</button>
         </div>
-        <img src="landing_background.png" alt="Books" class="mx-auto max-w-80 mt-20">
+        <img src="landing_background.png" alt="Books" width="300vh">
+
+
         <div class="features">
             <div class="feature">
                 <div class="feature-icon">📚</div>
@@ -159,7 +170,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2024 LitLink. All rights reserved.</p>
+        <p>&copy; 2024 Book Social. All rights reserved.</p>
     </footer>
 
     <!-- Modal Signup -->
@@ -170,7 +181,10 @@
                     <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <!-- INICIO -->
 
+                
+                <!-- FIM -->
                 <div class="modal-body">
                     <!-- Form de Sign Up -->
                     <form id="signupForm">
@@ -184,10 +198,8 @@
                         <input type="date" name="birth_date" class="form-control mb-3">
                         <label for="gender" class="form-label">Gender:</label>
                         <select name="gender" class="form-select mb-3">
-                            <option value="m">Male</option>
-                            <option value="f">Female</option>
-                            <option value="o">Other</option>
-
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
                         </select>
                         <button type="submit" class="btn btn-primary">Sign Up</button>
                     </form>
@@ -222,7 +234,7 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // // cadastrar header
+        import {userStoreId} from "../user/userStore.js"
         document.getElementById("signupForm").addEventListener("submit", function(event) {
             event.preventDefault();
             const formData = {};
@@ -280,7 +292,6 @@
                 body: jsonBody
             })
             .then(response => {
-                console.log(response)
                 if (!response.ok) {
                     return response.json().then(data => {
                         throw new Error(data.message);
@@ -288,17 +299,13 @@
                 }
                 return response.json(); 
             })
-            .then(data => { 
+            .then(data => {
                 // recebe o id do usuário aqui e redireciona para pagina dele
-                const loggedInUserID = data.data.userID;
-                const userJWT = data.data.userJWT
-                localStorage.setItem("userJWT", userJWT)
-                localStorage.setItem("userID", loggedInUserID)
+                console.log("Dados retornados:", data);
+                storeUserID.set(data.data.userID)
                 window.location.href = "/user/profile";
-
             })
             .catch(error => {
-
                 // forma de mostrar o erro na tela
                 // criar componente dinamico para mostrar erro
                 //utilizar todos os recursos disponiveis
