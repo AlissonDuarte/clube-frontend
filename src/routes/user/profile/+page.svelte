@@ -2,10 +2,11 @@
     import Menu from "../../Components/SideBars/Menu.svelte";
     import Header from "../../Components/Headers/Header.svelte";
     import ChangePasswordModal from "../../Components/Modals/ChangePasswordModal.svelte";
-    import { onMount } from 'svelte';
+    import { onMount } from 'svelte';    
+    import { API_URL_BASE } from '../../../app.js'
+    
     
     let showModal = false;
-
     function openModal(){
     showModal = true;
     }
@@ -24,6 +25,7 @@
     let jwt = '';
     let userID = '';
     let image = {buffer: new ArrayBuffer(0), name: "", previewUrl: ""};
+    let userImageUrl = ''
     // const authorizedExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
 
     async function handleImageSelection(e) {
@@ -43,23 +45,9 @@
         }
     }
 
-    async function fetchUserImages() {
-        try {
-            const response = await fetch("http://localhost:8000/user/" + userID + "/images", {
-                method:'GET',
-                headers: {
-                    'Content-Type': "image/png",
-                    'Authorization': jwt
-                }
-            });
-            if (!response.ok) {
-                throw new Error('Erro ao buscar imagens do usuário');
-            }
-            userImages = await response.json();
-        } catch (error) {
-            console.log("Error");
-        }
-    }
+ 
+
+
     async function fetchData() {
         const storageUserID = localStorage.getItem('userID');
         if (storageUserID){
@@ -70,7 +58,7 @@
         jwt = "Bearer " + userJWT;
 
         try {
-            const response = await fetch('http://localhost:3000/user/' + userID, {
+            const response = await fetch(`${API_URL_BASE}/user/${userID}`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
@@ -91,11 +79,20 @@
             console.error('Error fetching user data:', error);
             // Handle error (e.g., show a message to the user)
         }
+        const pictureResponse = await fetch(`${API_URL_BASE}/user/${userID}` + '/images/user', {
+            method: 'GET',
+            headers : {
+                "Authorization": jwt
+            }
+        });
+        const picture = await pictureResponse.blob();
+        userImageUrl = URL.createObjectURL(picture);
+
     }
 
     async function saveChanges() {
         try {
-            await fetch('http://localhost:3000/user/' + userID, {
+            await fetch(`${API_URL_BASE}/user/${userID}`, {
                 method: 'PATCH',
                 headers: {
                     "Content-Type": "application/json",
@@ -103,9 +100,22 @@
                 },
                 body: JSON.stringify(user)
             });
-
         } catch (error) {
             console.error('Error saving changes:', error);
+        }
+        if (image.buffer.byteLength > 0) {
+        const blob = new Blob([image.buffer], { type: 'image/png' });
+        const formData = new FormData();
+        formData.append('file', blob, 'file.png');
+        fetch(`${API_URL_BASE}/user/${userID}` + '/images/user', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                "Authorization": jwt
+            }
+        })
+            .then(response => response.json())
+            .then(data => console.log(data));
         }
     }
 
@@ -129,13 +139,20 @@
             <div class="bg-gray-50 relative rounded-lg overflow-hidden">
                 <div class="h-32 w-32 flex justify-center items-center">
                     <label for="file_input" class="cursor-pointer">
-                        <img src="https://via.placeholder.com/150" alt="Foto de perfil" class="rounded-full h-32 w-32">
+                        {#if image.previewUrl.length > 0}
+                            <img src={image.previewUrl} alt="Preview da imagem" class="rounded-full h-32 w-32">
+                        {:else if userImageUrl.length > 0}
+                            <img src={userImageUrl} alt="" class="rounded-full h-32 w-32">
+                        {:else}
+                            <img src="https://via.placeholder.com/150" alt="Foto de perfil" class="rounded-full h-32 w-32">
+                        {/if}
                         <input 
                         id="file_input" 
                         type="file" 
                         class="hidden" 
                         on:change={handleImageSelection}>
                     </label>
+                    
                 </div>
                 <div class="p-4">
                     <form>
@@ -176,7 +193,7 @@
 
                         
                         <div>
-                            <button class="bg-blue-500 text-white px-4 py-2 rounded mt-4 mr-10" on:click={saveChanges}>Save</button>
+                            <button id="save_button" class="bg-blue-500 text-white px-4 py-2 rounded mt-4 mr-10" on:click={saveChanges}>Save</button>
 
                             <button on:click={openModal} class="text-blue-500 cursor-pointer">Change Password</button>
                             <ChangePasswordModal {showModal} />

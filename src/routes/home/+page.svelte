@@ -1,6 +1,6 @@
 <script>
 
-	import { storeUserID } from "../user/userStore";
+	import { API_URL_BASE } from "../../app.js";
 
 </script>
 <!DOCTYPE html>
@@ -246,7 +246,7 @@
 
             var jsonBody = JSON.stringify(formData);
 
-            fetch("http://localhost:3000/users", {
+            fetch(`${API_URL_BASE}` + "/users", {
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -284,7 +284,7 @@
 
             var jsonBody = JSON.stringify(formData);
 
-            fetch("http://localhost:3000/user/login", {
+            fetch(`${API_URL_BASE}` + "/login", {
                 headers: {
                     "Content-Type": "application/json"
                 },
