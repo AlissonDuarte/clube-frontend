@@ -78,30 +78,29 @@
   ];
 </script>
 
-<!-- Renderização do cabeçalho -->
+
 <header>
   <Header />
 </header>
 
-<!-- Corpo da página -->
+
 <body class="bg-gray-50">
-  <!-- Layout da página -->
+  
   <div class="flex justify-between my-5 py-4">
-    <!-- Menu Lateral -->
+    
     <div class="w-1/4">
-      <!-- Conteúdo do menu lateral -->
       <Menu />
     </div>
 
-    <!-- Feed -->
+    
     <div class="w-full flex justify-center items-center relative">
-      <!-- Conteúdo do feed -->
+      
       <UserFeed posts={posts} />
 
-      <!-- Elemento de referência para scroll infinito -->
+      
       <div id="load-more-trigger" class="absolute bottom-0"></div>
 
-      <!-- Mostrar animação de carregamento enquanto os novos posts estão sendo buscados -->
+      
       {#if loading}
         <div class="loading-animation fixed bottom-0 left-0 right-0 bg-white z-10 p-2 text-center"> 
           <Spinner/>
@@ -109,11 +108,8 @@
       {/if}
     </div>
 
-    <!-- Notificações -->
     <div class="w-1/4 p-4">
-      <!-- Conteúdo das notificações -->
       <h2 class="text-lg text-black font-semibold mb-4">Suggestions</h2>
-      <!-- Adicione itens de notificação aqui -->
     </div>
   </div>
 </body>

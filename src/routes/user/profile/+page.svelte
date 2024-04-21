@@ -103,6 +103,8 @@
         } catch (error) {
             console.error('Error saving changes:', error);
         }
+    }
+    async function changePicture() {
         if (image.buffer.byteLength > 0) {
         const blob = new Blob([image.buffer], { type: 'image/png' });
         const formData = new FormData();
@@ -118,7 +120,6 @@
             .then(data => console.log(data));
         }
     }
-
     onMount(() => {
         fetchData();
     });
@@ -137,14 +138,14 @@
 
         <div class="w-1/2 px-4">
             <div class="bg-gray-50 relative rounded-lg overflow-hidden">
-                <div class="h-32 w-32 flex justify-center items-center">
+                <div class="h-52 w-52 flex justify-center items-center">
                     <label for="file_input" class="cursor-pointer">
                         {#if image.previewUrl.length > 0}
-                            <img src={image.previewUrl} alt="Preview da imagem" class="rounded-full h-32 w-32">
+                            <img src={image.previewUrl} alt="Preview da imagem" class="rounded-full h-52 w-52">
                         {:else if userImageUrl.length > 0}
-                            <img src={userImageUrl} alt="" class="rounded-full h-32 w-32">
+                            <img src={userImageUrl} alt="" class="rounded-full h-52 w-52">
                         {:else}
-                            <img src="https://via.placeholder.com/150" alt="Foto de perfil" class="rounded-full h-32 w-32">
+                            <img src="https://via.placeholder.com/150" alt="Foto de perfil" class="rounded-full h-52 w-52">
                         {/if}
                         <input 
                         id="file_input" 
@@ -152,8 +153,10 @@
                         class="hidden" 
                         on:change={handleImageSelection}>
                     </label>
-                    
+                    <!-- criar um botão de upload somente para foto de perfil -->
                 </div>
+                <button id="save_button" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out mt-4" on:click={changePicture}>Change Picture</button>
+
                 <div class="p-4">
                     <form>
                         <div class="mb-4">
