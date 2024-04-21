@@ -5,7 +5,9 @@
   export let post;
 
   let userImage = "";
+  let hasUserImage = false;
   let postImage = "";
+  let hasPostImage = false;
 
   async function handlePictures(postUserId, postImageId) {
     const userJWT = localStorage.getItem('userJWT');
@@ -18,6 +20,10 @@
         'Content-Type': 'application/json'
       }
     });
+
+    if (userResponse.ok) {
+      hasUserImage = true
+    }
     const userImageBlob = await userResponse.blob();
     userImage = userImageBlob ? URL.createObjectURL(userImageBlob) : 'placeholder_user.jpg'; // Usando placeholder se não houver imagem
 
@@ -29,6 +35,10 @@
         'Content-Type': 'application/json'
       }
     });
+    if (postResponse.ok) {
+      hasPostImage = true
+    }
+
     const postImageBlob = await postResponse.blob();
     postImage = postImageBlob ? URL.createObjectURL(postImageBlob) : 'placeholder_post.jpg'; // Usando placeholder se não houver imagem
   }
@@ -40,7 +50,6 @@
   onMount(() => {
     const postUserId = post.User.ID; // Acessando o ID do usuário do post
     const postImageId = post.ImageID; // Acessando o ID da imagem do post
-    console.log(postImage)
     handlePictures(postUserId, postImageId);
   });
 </script>
@@ -62,10 +71,9 @@
       <!-- Divisão da imagem -->
       <div class="w-1/3">
         <!-- Imagem do post -->
-        {#if postImage === ''}
-        <img class="w-full h-full" src="https://via.placeholder.com/300x400" alt="postImage">
+        {#if hasPostImage === true}
+          <img class="w-full h-full" src={postImage} alt="postImage">
         {:else}
-          <!-- Imagem do post -->
           <img class="w-full h-full" src="https://via.placeholder.com/300x400" alt="postImage">
         {/if}
       </div>
