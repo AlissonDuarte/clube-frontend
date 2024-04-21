@@ -19,7 +19,7 @@
       }
     });
     const userImageBlob = await userResponse.blob();
-    userImage = URL.createObjectURL(userImageBlob);
+    userImage = userImageBlob ? URL.createObjectURL(userImageBlob) : 'placeholder_user.jpg'; // Usando placeholder se não houver imagem
 
     // Busca a imagem do post
     const postResponse = await fetch(`${API_URL_BASE}/user/${postUserId}/images/posts/${postImageId}`, {
@@ -30,19 +30,17 @@
       }
     });
     const postImageBlob = await postResponse.blob();
-    postImage = URL.createObjectURL(postImageBlob);
+    postImage = postImageBlob ? URL.createObjectURL(postImageBlob) : 'placeholder_post.jpg'; // Usando placeholder se não houver imagem
   }
 
   function hasTags(tags) {
     return tags && tags.length > 0;
   }
 
-  // Esta função é chamada quando o componente é montado
-  // Aqui, você precisa extrair as informações necessárias do post e chamar a função handlePictures
-  // para carregar as imagens
   onMount(() => {
     const postUserId = post.User.ID; // Acessando o ID do usuário do post
     const postImageId = post.ImageID; // Acessando o ID da imagem do post
+    console.log(postImage)
     handlePictures(postUserId, postImageId);
   });
 </script>
@@ -64,7 +62,12 @@
       <!-- Divisão da imagem -->
       <div class="w-1/3">
         <!-- Imagem do post -->
-        <img class="w-full h-full" src={postImage} alt="postImage">
+        {#if postImage === ''}
+        <img class="w-full h-full" src="https://via.placeholder.com/300x400" alt="postImage">
+        {:else}
+          <!-- Imagem do post -->
+          <img class="w-full h-full" src="https://via.placeholder.com/300x400" alt="postImage">
+        {/if}
       </div>
       <!-- Divisão do texto, tags, etc. -->
       <div class="w-2/3 p-4">
