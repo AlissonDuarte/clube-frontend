@@ -69,13 +69,9 @@
     <!-- Conteúdo do post -->
     <div class="bg-white rounded-b overflow-hidden shadow-lg flex">
       <!-- Divisão da imagem -->
-      <div class="w-1/3">
+      <div class="w-1/3" style="width: full; height: full;"> <!-- Adicionando estilos inline -->
         <!-- Imagem do post -->
-        {#if hasPostImage === true}
-          <img class="w-full h-full" src={postImage} alt="postImage">
-        {:else}
-          <img class="w-full h-full" src="https://via.placeholder.com/300x400" alt="postImage">
-        {/if}
+          <img class="w-full h-full object-cover" src={postImage} alt="postImage">
       </div>
       <!-- Divisão do texto, tags, etc. -->
       <div class="w-2/3 p-4">
