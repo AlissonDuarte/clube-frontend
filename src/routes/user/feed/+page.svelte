@@ -9,12 +9,14 @@
 
   let loading = false;
   let posts = [];
+  let page = 1; // Definir a página inicial
+  let pageSize = 2; // Tamanho padrão da página
 
   async function fetchPosts() {
     var userJWT = localStorage.getItem('userJWT');
     var userID = localStorage.getItem('userID');
 
-    const response = await fetch(`${API_URL_BASE}/user/1/feed`, {
+    const response = await fetch(`${API_URL_BASE}/user/${userID}/feed?page=${page}&pageSize=${pageSize}`, {
       method: 'GET',
       headers: {
         'Authorization': 'Bearer ' + userJWT,
@@ -36,6 +38,7 @@
     try {
       const newPostsData = await fetchPosts();
       posts = [...posts, ...newPostsData];
+      page++; // Incrementar a página para a próxima chamada
     } catch (error) {
       console.error('Error fetching more posts:', error);
     } finally {
