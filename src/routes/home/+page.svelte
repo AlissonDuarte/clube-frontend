@@ -303,7 +303,7 @@
                 // recebe o id do usuário aqui e redireciona para pagina dele
                 console.log("Dados retornados:", data);
                 storeUserID.set(data.data.userID)
-                window.location.href = "/user/profile";
+                window.location.href = "/user/feed";
             })
             .catch(error => {
                 // forma de mostrar o erro na tela
