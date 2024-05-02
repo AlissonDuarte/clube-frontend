@@ -70,7 +70,7 @@
   <Header />
 </header>
 
-<body class="bg-gray-50">
+<body>
   <div class="flex justify-between my-5 py-4">
     <div class="w-1/4">
       <Menu />
@@ -92,7 +92,7 @@
     </div>
 
     <div class="w-1/4 p-4">
-      <h2 class="text-lg text-black font-semibold mb-4">Suggestions</h2>
+      <h2 class="text-lg text-white font-semibold mb-4">Suggestions</h2>
     </div>
   </div>
 </body>

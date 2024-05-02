@@ -129,7 +129,7 @@
     <Header />
 </header>
 
-<body class="bg-gray-50">
+<body>
 
     <div class="flex justify-between my-5 py-4">
         <div class="w-1/4">
@@ -137,7 +137,7 @@
         </div>
 
         <div class="w-1/2 px-4">
-            <div class="bg-gray-50 relative rounded-lg overflow-hidden">
+            <div class="relative rounded-lg overflow-hidden border-t border-white">
                 <div class="h-52 w-52 flex justify-center items-center">
                     <label for="file_input" class="cursor-pointer">
                         {#if image.previewUrl.length > 0}
@@ -155,33 +155,34 @@
                     </label>
                     <!-- criar um botão de upload somente para foto de perfil -->
                 </div>
-                <button id="save_button" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out mt-4" on:click={changePicture}>Change Picture</button>
 
                 <div class="p-4">
+                    <button id="save_button" class="bg-gray-200 text-gray-800 px-4 py-2 my-4 rounded-lg shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out mt-4" on:click={changePicture}>Change Picture</button>
+
                     <form>
                         <div class="mb-4">
-                            <label for="username" class="block text-sm font-semibold mb-1">Username</label>
+                            <label for="username" class="block text-sm text-white mb-1">Username</label>
                             <input type="text" id="username" class="w-3/4 px-2 py-1 border rounded" placeholder="Username" bind:value={user.Username}>
                         </div>
                         <div class="mb-4">
-                            <label for="name" class="block text-sm font-semibold mb-1">Name</label>
+                            <label for="name" class="block text-sm text-white mb-1">Name</label>
                             <input type="text" id="name" class="w-3/4 px-2 py-1 border rounded" placeholder="Name" bind:value={user.Name}>
                         </div>
                         <div class="mb-4">
-                            <label for="email" class="block text-sm font-semibold mb-1">Email</label>
+                            <label for="email" class="block text-sm text-white mb-1">Email</label>
                             <input type="email" id="email" class="w-3/4 px-2 py-1 border rounded" placeholder="Email" bind:value={user.Email}>
                         </div>
                         <div class="mb-4">
-                            <label for="phone" class="block text-sm font-semibold mb-1">Phone</label>
+                            <label for="phone" class="block text-sm text-white mb-1">Phone</label>
                             <input type="tel" id="phone" class="w-3/4 px-2 py-1 border rounded" placeholder="Phone" bind:value={user.Phone}>
                         </div>
                         <div class="mb-4">
-                            <label for="bio" class="block text-sm font-semibold mb-1">Bio</label>
+                            <label for="bio" class="block text-sm text-white mb-1">Bio</label>
                             <textarea id="bio" class="w-3/4 px-2 py-1 border rounded" rows="4" placeholder="Bio" bind:value={user.Bio}></textarea>
                         </div>
 
                         <div class="mb-4">
-                            <label for="gender" class="block text-sm font-semibold mb-1">Gender</label>
+                            <label for="gender" class="block text-sm text-white mb-1">Gender</label>
                             <select id="gender" class="w-3/4 px-2 py-1 border rounded" bind:value={user.Gender}>
                                 <option value="">Select gender</option>
                                 <option value="m">Male</option>
@@ -190,7 +191,7 @@
                             </select>
                         </div>
                         <div class="mb-4">
-                            <label for="birthDate" class="block text-sm font-semibold mb-1">Birth Date</label>
+                            <label for="birthDate" class="block text-sm text-white mb-1">Birth Date</label>
                             <input type="date" id="birthDate" class="w-3/4 px-2 py-1 border rounded" bind:value={user.birth_date}>
                         </div>
 
@@ -208,7 +209,7 @@
 
         <div class="w-1/4 p-4">
             <!-- Conteúdo das notificações -->
-            <h2 class="text-lg text-black font-semibold mb-4">Suggestions</h2>
+            <h2 class="text-lg text-white font-semibold mb-4">Suggestions</h2>
             <!-- Adicione itens de notificação aqui -->
         </div>
     </div>

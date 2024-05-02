@@ -1,4 +1,4 @@
-<header class="bg-green-600 text-white py-4 px-6 mb-4">
+<header class="bg-zinc-950 text-white py-4 px-6 mb-4">
   <h1 class="text-3xl font-bold tracking-wide">LitLink</h1>
 </header>
 

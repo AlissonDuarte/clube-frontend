@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+body {
+    background-color: rgb(17, 24, 39);
+    background-image: radial-gradient(circle, rgba(17, 24, 39, 1) 0%, rgba(0, 0, 0, 1) 100%);    
+    /* Adicione outros estilos globais conforme necessário */
+}
