@@ -38,42 +38,44 @@
 <div class="relative">
   <div class="carousel w-full overflow-hidden whitespace-nowrap relative">
     {#each cards as card}
-      <div class="carousel-item relative inline-block w-1/4 whitespace-normal p-2">
-        <a href="/pagina-de-destino">
-        <div class="card-content h-40 overflow-y-auto bg-white shadow-md p-4">
-          <h2 class="card-title text-xl font-semibold text-gray-800 mb-2">{card.Name}</h2>
-          <p class="card-text text-sm text-gray-600">{card.Description}</p>
-        </div>
-        {#if card.ID}
-          {#await handlePictures(card) then clubImage}
-            <img src={clubImage} alt="Imagem" class="w-full shadow-md" style="height: 300px;" /> <!-- Defina a altura desejada -->
-          {/await}
-        {/if}
+    <div class="carousel-item relative inline-block w-1/4 whitespace-normal p-2">
+      <a href="/pagina-de-destino" class="block rounded-lg overflow-hidden bg-white shadow-md h-64"> <!-- Definindo a altura para 64 unidades -->
+          <div class="card-content p-4 h-full flex flex-col justify-between"> <!-- Usando flexbox para garantir que o conteúdo preencha o espaço disponível -->
+              <div class="overflow-y-auto mt-2">
+                  <h2 class="card-title text-xl mb-2 font-semibold text-gray-800 mb-2">{card.Name}</h2>
+              </div>
+              {#if card.ID}
+                  {#await handlePictures(card) then clubImage}
+                      <img src={clubImage} alt="Imagem" class="w-full h-60 object-cover" /> <!-- Use object-cover para manter a proporção da imagem -->
+                  {/await}
+              {/if}
+          </div>
       </a>
-      </div>
+  </div>
+  
     {/each}
   </div>
 
   <button on:click={prevSlide} class="absolute top-1/2 left-6 transform -translate-y-1/2 btn btn-circle bg-gray-800 text-white opacity-75 hover:opacity-100 focus:outline-none">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
     </svg>
-</button>
+  </button>
 
-<button on:click={nextSlide} class="absolute top-1/2 right-4 transform -translate-y-1/2 btn btn-circle bg-gray-800 text-white opacity-75 hover:opacity-100 focus:outline-none">
+  <button on:click={nextSlide} class="absolute top-1/2 right-4 transform -translate-y-1/2 btn btn-circle bg-gray-800 text-white opacity-75 hover:opacity-100 focus:outline-none">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
     </svg>
-</button>
-
+  </button>
 </div>
+
 
 
 <style>
   /* Estilos do carousel podem ser ajustados conforme necessário */
   .carousel {
     display: flex;
-    overflow-x: scroll;
+    overflow-y: scroll;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
