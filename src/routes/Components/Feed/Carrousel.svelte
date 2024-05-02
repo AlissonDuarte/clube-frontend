@@ -41,8 +41,10 @@
     <div class="carousel-item relative inline-block w-1/4 whitespace-normal p-2">
       <a href="/pagina-de-destino" class="block rounded-lg overflow-hidden bg-white shadow-md h-64"> <!-- Definindo a altura para 64 unidades -->
           <div class="card-content p-4 h-full flex flex-col justify-between"> <!-- Usando flexbox para garantir que o conteúdo preencha o espaço disponível -->
-              <div class="overflow-y-auto mt-2">
-                  <h2 class="card-title text-xl mb-2 font-semibold text-gray-800 mb-2">{card.Name}</h2>
+              <div class="overflow-y-auto mb-2 h-10">
+                  <h2 class="card-title text-xl font-semibold text-gray-800 mb-2">{card.Name}</h2>
+                  <p class="card-text text-sm text-gray-600">{card.Description}</p>
+
               </div>
               {#if card.ID}
                   {#await handlePictures(card) then clubImage}
