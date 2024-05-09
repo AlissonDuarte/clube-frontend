@@ -165,9 +165,6 @@
         </div>
     </div>
 
-    <footer class="bg-gray-800 py-4 text-center w-full">
-        <p>&copy; 2024 LitLink. All rights reserved.</p>
-    </footer>
 
     <!-- Modal Signup -->
     <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
@@ -314,4 +311,9 @@
 
     </script>
 </body>
+<footer class="fixed bottom-0 left-0 bg-gray-800 py-4 text-center w-full">
+    <p>&copy; 2024 LitLink. All rights reserved.</p>
+</footer>
+
+
 </html>
