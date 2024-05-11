@@ -1,16 +1,63 @@
 <script>
+    import { API_URL_BASE } from "../../../app";
 
-  export let showModal = false   
-  let currentPassword = "";
-  let newPassword = "";
-  let confirmPassword = "";
-  
+
+  export let showModal = false
+  let changePassword = {
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+    userID: 0
+  } 
+
+
+  let jwt = '';
+
   function closeModal(){
     showModal = false;
   }
 
-  function handleSubmit(){
-    window.location.reload()
+
+
+  async function handleSubmit() {
+    const storageUserID = localStorage.getItem('userID');
+
+    if (storageUserID) {
+      changePassword.userID = storageUserID
+    }
+
+    const userJWT = localStorage.getItem('userJWT');
+    jwt = "Bearer " + userJWT;
+
+    try {
+      fetch(`${API_URL_BASE}/user/${changePassword.userID}/change_password`, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": jwt
+        },
+        body: JSON.stringify(changePassword)
+
+      }).then(response => {
+
+        if (!response.ok) {
+          throw new Error("Error to send data");
+        }
+
+        return response.json();
+
+      }).then(data => {
+        if (data.code) {
+          window.location.reload();
+        }
+         else {
+          alert("Error: " + data.error);
+         }
+      })
+
+    } catch (error) {
+      console.log("Error to send data: ", error);
+    }
   }
 
 </script>
@@ -26,9 +73,9 @@
             </h3>
 
             <div class="mt-4">
-              <input type="password" placeholder="Current Password" bind:value={currentPassword} class="border border-gray-300 px-3 py-2 rounded-md w-full mb-4" />
-              <input type="password" placeholder="New Password" bind:value={newPassword} class="border border-gray-300 px-3 py-2 rounded-md w-full mb-4" />
-              <input type="password" placeholder="Confirm New Password" bind:value={confirmPassword} class="border border-gray-300 px-3 py-2 rounded-md w-full mb-4" />
+              <input type="password" placeholder="Current Password" bind:value={changePassword.currentPassword} class="border border-gray-300 px-3 py-2 rounded-md w-full mb-4" />
+              <input type="password" placeholder="New Password" bind:value={changePassword.newPassword} class="border border-gray-300 px-3 py-2 rounded-md w-full mb-4" />
+              <input type="password" placeholder="Confirm New Password" bind:value={changePassword.confirmPassword} class="border border-gray-300 px-3 py-2 rounded-md w-full mb-4" />
             </div>
 
             <div class="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b space-x-4">
