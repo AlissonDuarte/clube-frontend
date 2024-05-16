@@ -3,7 +3,7 @@
   import { onMount } from 'svelte';
   import Menu from "../../Components/SideBars/Menu.svelte";
   import Header from "../../Components/Headers/Header.svelte";
-  import UserFeed from "../../Components/Feed/UserFeed.svelte";
+  import GeneralFeed from "../../Components/Feed/GeneralFeed.svelte";
   import Spinner from '../../Components/Feed/Spinner.svelte';
   import { API_URL_BASE } from '../../../app.js'
 
@@ -78,8 +78,8 @@
 
     <div class="w-full flex justify-center items-center relative flex-col space-y-8">
       {#each posts as post}
-        <!-- Passando as propriedades User e ImageID para o componente UserFeed -->
-        <UserFeed {post} class="mb-8" />
+        <!-- Passando as propriedades User e ImageID para o componente GeneralFeed -->
+        <GeneralFeed {post} class="mb-8" />
       {/each}
 
       <div id="load-more-trigger"></div>

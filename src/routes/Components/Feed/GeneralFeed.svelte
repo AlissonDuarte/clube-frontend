@@ -1,4 +1,4 @@
-<!-- UserFeed.svelte -->
+<!-- GeneralFeed.svelte -->
 <script>
   import { onMount } from 'svelte';
   import { API_URL_BASE } from '../../../app.js';
