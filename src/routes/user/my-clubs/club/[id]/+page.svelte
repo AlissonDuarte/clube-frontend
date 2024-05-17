@@ -1,21 +1,28 @@
 <script>
 import {onMount} from 'svelte';
-import Menu from "../../../Components/SideBars/Menu.svelte";
-import Header from "../../../Components/Headers/Header.svelte";
-import GeneralFeed from "../../../Components/Feed/GeneralFeed.svelte";
-import Spinner from '../../../Components/Feed/Spinner.svelte';
-import { API_URL_BASE } from '../../../../app.js'
+import Menu from "../../../../Components/SideBars/Menu.svelte";
+import Header from "../../../../Components/Headers/Header.svelte";
+import GeneralFeed from "../../../../Components/Feed/GeneralFeed.svelte";
+import Spinner from '../../../../Components/Feed/Spinner.svelte';
+import { API_URL_BASE } from '../../../../../app.js'
 
 let loading = false;
 let posts = [];
 let page = 1; // Definir a página inicial
 let pageSize = 2; // Tamanho padrão da página
 
+function getIdFromUrl() {
+    const url = window.location.pathname;
+    const parts = url.split('/');
+    return parts[parts.length - 1];
+  }
+
+let clubID = getIdFromUrl()
 async function fetchPosts() {
     var userJWT = localStorage.getItem('userJWT');
     var userID = localStorage.getItem('userID');
 
-    const response = await fetch(`${API_URL_BASE}/club/${userID}/feed`, {
+    const response = await fetch(`${API_URL_BASE}/club/${clubID}/feed`, {
       method: 'GET',
       headers: {
         'Authorization': 'Bearer ' + userJWT,

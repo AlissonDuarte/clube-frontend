@@ -40,7 +40,7 @@
     {#each cards as card}
     <div class="carousel-item relative inline-block w-1/4 whitespace-normal p-2">
       <h2 class="card-title text-xl font-semibold text-gray-200 mb-3">{card.Name}</h2>
-      <a href="/pagina-de-destino" class="block rounded-lg overflow-hidden bg-white shadow-md h-64"> <!-- Definindo a altura para 64 unidades -->
+      <a href="my-clubs/club/{card.ID}"  class="block rounded-lg overflow-hidden bg-white shadow-md h-64"> <!-- Definindo a altura para 64 unidades -->
           <div class="card-content p-4 h-full flex flex-col justify-between"> <!-- Usando flexbox para garantir que o conteúdo preencha o espaço disponível -->
               <div class="overflow-y-auto mb-2 h-10">
               </div>
