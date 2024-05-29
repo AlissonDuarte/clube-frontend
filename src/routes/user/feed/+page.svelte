@@ -4,6 +4,7 @@
   import Menu from "../../Components/SideBars/Menu.svelte";
   import Header from "../../Components/Headers/Header.svelte";
   import GeneralFeed from "../../Components/Feed/GeneralFeed.svelte";
+  import PostForm from '../../Components/Feed/PostForm.svelte';
   import Spinner from '../../Components/Feed/Spinner.svelte';
   import { API_URL_BASE } from '../../../app.js'
 
@@ -37,12 +38,12 @@
 
     try {
       const newPostsData = await fetchPosts();
-      posts = [...posts, ...newPostsData];
-      page++; // Incrementar a página para a próxima chamada
+        posts = [...posts, ...newPostsData];
+        page++; // Incrementar a página para a próxima chamada
     } catch (error) {
-      console.error('Error fetching more posts:', error);
+        console.error('Error fetching more posts:', error);
     } finally {
-      loading = false;
+        loading = false;
     }
   }
 
@@ -69,14 +70,19 @@
 <header>
   <Header />
 </header>
-
 <body>
+
+  <div class="w-full max-w-xl mx-auto absolute left-1/2 transform -translate-x-1/2 z-50">
+    <PostForm />
+  </div>
+
   <div class="flex justify-between my-5 py-4">
     <div class="w-1/4">
       <Menu />
     </div>
 
-    <div class="w-full flex justify-center items-center relative flex-col space-y-8">
+    <div class="mt-80 w-full flex justify-center items-center relative flex-col space-y-8">
+
       {#each posts as post}
         <!-- Passando as propriedades User e ImageID para o componente GeneralFeed -->
         <GeneralFeed {post} class="mb-8" />
@@ -85,7 +91,7 @@
       <div id="load-more-trigger"></div>
 
       {#if loading}
-        <div class="loading-animation fixed bottom-0 left-0 right-0 bg-white z-10 p-2 text-center">
+        <div class="loading-animation fixed bottom-0 left-0 right-0 bg-gray-950 z-10 p-2 text-center">
           <Spinner />
         </div>
       {/if}

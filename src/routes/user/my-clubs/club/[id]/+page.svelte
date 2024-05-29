@@ -90,7 +90,7 @@ onMount(() => {
         <div id="load-more-trigger"></div>
   
         {#if loading}
-          <div class="loading-animation fixed bottom-0 left-0 right-0 bg-white z-10 p-2 text-center">
+          <div class="loading-animation fixed bottom-0 left-0 right-0 bg-gray-900 z-10 p-2 text-center">
             <Spinner />
           </div>
         {/if}
