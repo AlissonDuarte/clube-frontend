@@ -66,26 +66,27 @@
       </div>
     </div>
     
-    <!-- Conteúdo do post -->
-    <div class="bg-gray-600 rounded-b-lg overflow-hidden shadow-lg flex"> <!-- Aumento do raio de borda -->
-      <!-- Divisão da imagem -->
-      <div class="w-1/3">
-        <!-- Imagem do post -->
-        <img class="w-full h-full object-cover rounded-lg" src={postImage} alt="postImage"> <!-- Aumento do raio de borda -->
-      </div>
-      <!-- Divisão do texto, tags, etc. -->
-      <div class="w-2/3 p-4">
-        <div class="font-bold text-xl text-white mb-2"> <!-- Alteração na cor do texto -->
-          {post.Title}
-        </div>
-        <p class="text-gray-300 text-base mb-4"> <!-- Alteração na cor do texto -->
-          {post.Content}
-        </p>
-        <!-- Adicionando uma barra divisória -->
-        <hr class="border-t border-gray-500 mb-4"> <!-- Alteração na cor da borda -->
-        <!-- Tags, botões de ação, etc. podem ser adicionados aqui -->
-      </div>
+  <!-- Conteúdo do post -->
+  <div class="bg-gray-600 rounded-b-lg overflow-hidden shadow-lg flex"> <!-- Aumento do raio de borda -->
+    <!-- Divisão da imagem -->
+    <div class="w-1/3">
+      <!-- Imagem do post -->
+      <img class="w-full h-full object-cover rounded-lg" src={postImage} alt="postImage"> <!-- Aumento do raio de borda -->
     </div>
+    <!-- Divisão do texto, tags, etc. -->
+    <div class="w-2/3 p-4">
+      <div class="font-bold text-xl text-white mb-2 h-15 overflow-y-auto"> <!-- Defina uma altura fixa -->
+        {post.Title}
+      </div>
+      <p class="text-gray-300 text-base mb-4 h-40 overflow-y-auto"> <!-- Defina uma altura fixa -->
+        {post.Content}
+      </p>
+      <!-- Adicionando uma barra divisória -->
+      <hr class="border-t border-gray-500 mb-4"> <!-- Alteração na cor da borda -->
+      <!-- Tags, botões de ação, etc. podem ser adicionados aqui -->
+    </div>
+  </div>
+
   </div>
 </div>
 

@@ -46,8 +46,6 @@
     }
 
  
-
-
     async function fetchData() {
         const storageUserID = localStorage.getItem('userID');
         if (storageUserID){

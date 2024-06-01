@@ -1,6 +1,9 @@
 <script>
+    import Alert from './../Alerts/Alert.svelte'
     import { API_URL_BASE } from "../../../app";
 
+    let alertMessage = '';
+    let isVisible = false
     let postObject = {
         Title: "",
         Content: "",
@@ -8,14 +11,25 @@
     let file = null;
     let jwt = ""
 
+    function showError(message) {
+      alertMessage = message;
+      isVisible = true;
+      setTimeout(() => {
+        isVisible = false;
+      }, 5000);
+    }
+
+
+
     async function handleSubmit(event) {
       event.preventDefault();
       const storageUserID = localStorage.getItem("userID");
       const userJWT = localStorage.getItem("userJWT");
 
       jwt = "Bearer " + userJWT;
+
       const formdata = new FormData();
-      
+    
       formdata.append('title', postObject.Title);
       formdata.append('content', postObject.Content);
       formdata.append("userID", storageUserID);
@@ -29,15 +43,20 @@
         const response = await fetch(`${API_URL_BASE}/post`, {
             method: 'POST',
             headers: {
-                "Authorization": jwt
+
+                "Authorization": jwt,
+                "Accept": "application/json"
             },
             body: formdata
         });
 
         const data = await response.json()
-        console.log("data", data)
+        const status_code = response.status
+        if (status_code != 200){
+          showError("Error to create post: " + response.text);
+        }
       } catch (error){
-        console.log("error", error)
+        showError("Error to create post: " + error.message);
       }
     }
   
@@ -56,7 +75,7 @@
     <form on:submit={handleSubmit}>
       <div>
         <label for="title" class="block text-sm text-white mb-1"></label>
-        <input type="text" id="title" class="block p-3 w-full text-sm text-gray-100 bg-gray-700 rounded-lg border border-gray-600 focus:ring-blue-500 focus:border-blue-500" placeholder="Title" bind:value={postObject.Title}>
+        <input type="text" id="title" class="block p-3 w-full text-sm text-gray-100 bg-gray-700 rounded-lg border border-gray-600 focus:ring-blue-500 focus:border-blue-500" placeholder="Title" bind:value={postObject.Title} required>
       </div>
       <div class="mb-4">
         <label for="message" class="block mb-2 text-sm font-medium text-gray-300"></label>
@@ -65,7 +84,7 @@
                     rows="4" 
                     class="block p-3 w-full text-sm text-gray-100 bg-gray-700 rounded-lg border border-gray-600 focus:ring-blue-500 focus:border-blue-500" 
                     placeholder="Write your thoughts here..." 
-                    bind:value={postObject.Content}></textarea>
+                    bind:value={postObject.Content} required></textarea>
 
       </div>
       <div class="mb-4 flex items-center">
@@ -75,7 +94,7 @@
             <path fill-rule="evenodd" d="M4 9a1 1 0 000 2h8a1 1 0 100-2H4zm4 4a1 1 0 000 2h4a1 1 0 100-2H8z" clip-rule="evenodd"></path>
             <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 011 1v11a1 1 0 01-1 1H4a1 1 0 01-1-1V5zm10 9a1 1 0 100 2H6a1 1 0 100-2h7zM5 11a1 1 0 100 2h6a1 1 0 100-2H5zm2-4a1 1 0 100 2h4a1 1 0 100-2H7z" clip-rule="evenodd"></path>
           </svg>
-          File
+          *File
         </label>
         <input id="fileUpload" type="file" class="hidden" on:change={handleFileChange}>
       </div>
@@ -84,4 +103,8 @@
       </div>
     </form>
   </div>
+
+  {#if isVisible}
+    <Alert {alertMessage} {isVisible}/>
+  {/if}
   
