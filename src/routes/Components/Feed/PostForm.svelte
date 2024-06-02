@@ -2,6 +2,8 @@
     import Alert from './../Alerts/Alert.svelte'
     import { API_URL_BASE } from "../../../app";
 
+    export let endpointUrl;
+
     let alertMessage = '';
     let isVisible = false
     let postObject = {
@@ -40,7 +42,7 @@
 
       try{
         
-        const response = await fetch(`${API_URL_BASE}/post`, {
+        const response = await fetch(`${API_URL_BASE}/${endpointUrl}`, {
             method: 'POST',
             headers: {
 

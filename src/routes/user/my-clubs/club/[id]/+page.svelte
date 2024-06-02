@@ -4,6 +4,7 @@ import Menu from "../../../../Components/SideBars/Menu.svelte";
 import Header from "../../../../Components/Headers/Header.svelte";
 import GeneralFeed from "../../../../Components/Feed/GeneralFeed.svelte";
 import Spinner from '../../../../Components/Feed/Spinner.svelte';
+import PostForm from '../../../../Components/Feed/PostForm.svelte';
 import { API_URL_BASE } from '../../../../../app.js'
 
 let loading = false;
@@ -12,17 +13,23 @@ let page = 1; // Definir a página inicial
 let pageSize = 2; // Tamanho padrão da página
 
 function getIdFromUrl() {
-    const url = window.location.pathname;
-    const parts = url.split('/');
-    return parts[parts.length - 1];
-  }
-
+    if (typeof window !== 'undefined') {
+        const url = window.location.pathname;
+        const parts = url.split('/');
+        return parts[parts.length - 1];
+    } else {
+        return null;
+    }
+}
 let clubID = getIdFromUrl()
+
+let endpointUrl = `club/${clubID}/post`
+
 async function fetchPosts() {
     var userJWT = localStorage.getItem('userJWT');
     var userID = localStorage.getItem('userID');
 
-    const response = await fetch(`${API_URL_BASE}/club/${clubID}/feed`, {
+    const response = await fetch(`${API_URL_BASE}/club/${clubID}/feed?page=${page}&pageSize=${pageSize}`, {
       method: 'GET',
       headers: {
         'Authorization': 'Bearer ' + userJWT,
@@ -76,12 +83,16 @@ onMount(() => {
 </header>
 
 <body>
+  <div class="w-full max-w-xl mx-auto absolute left-1/2 transform -translate-x-1/2 z-50">
+    <PostForm endpointUrl={endpointUrl}/>
+  </div>
+  
     <div class="flex justify-between my-5 py-4">
       <div class="w-1/4">
         <Menu />
       </div>
   
-      <div class="w-full flex justify-center items-center relative flex-col space-y-8">
+      <div class="mt-80 w-full flex justify-center items-center relative flex-col space-y-8">
         {#each posts as post}
           <!-- Passando as propriedades User e ImageID para o componente GeneralFeed -->
           <GeneralFeed {post} class="mb-8" />

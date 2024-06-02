@@ -73,7 +73,7 @@
 <body>
 
   <div class="w-full max-w-xl mx-auto absolute left-1/2 transform -translate-x-1/2 z-50">
-    <PostForm />
+    <PostForm endpointUrl={"posts"}/>
   </div>
 
   <div class="flex justify-between my-5 py-4">
