@@ -70,10 +70,10 @@
 <header>
   <Header />
 </header>
-<body>
 
+<body>
   <div class="w-full max-w-xl mx-auto absolute left-1/2 transform -translate-x-1/2 z-50">
-    <PostForm endpointUrl={"posts"}/>
+    <PostForm endpointUrl={"post"}/>
   </div>
 
   <div class="flex justify-between my-5 py-4">
@@ -81,7 +81,7 @@
       <Menu />
     </div>
 
-    <div class="mt-80 w-full flex justify-center items-center relative flex-col space-y-8">
+    <div class="mt-96 w-full flex justify-center items-center relative flex-col space-y-8">
 
       {#each posts as post}
         <!-- Passando as propriedades User e ImageID para o componente GeneralFeed -->
