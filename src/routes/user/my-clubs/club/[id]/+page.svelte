@@ -92,7 +92,7 @@ onMount(() => {
         <Menu />
       </div>
   
-      <div class="mt-80 w-full flex justify-center items-center relative flex-col space-y-8">
+      <div class="mt-96 w-full flex justify-center items-center relative flex-col space-y-8">
         {#each posts as post}
           <!-- Passando as propriedades User e ImageID para o componente GeneralFeed -->
           <GeneralFeed {post} class="mb-8" />

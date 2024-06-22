@@ -127,7 +127,9 @@
             class="block p-3 w-full text-sm text-gray-100 bg-gray-700 rounded-lg border border-gray-600 focus:ring-blue-500 focus:border-blue-500" 
             placeholder="Write your thoughts here..."
             maxlength="512"
-            bind:value={postObject.Content} required></textarea>
+            bind:value={postObject.Content} 
+            on:input={updateContentLength} 
+            required></textarea>
 
           <div class="mt-2 h-2 bg-gray-200 rounded-full">
             <div 

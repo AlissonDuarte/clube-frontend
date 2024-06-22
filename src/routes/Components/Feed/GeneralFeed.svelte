@@ -82,11 +82,24 @@
         {post.Content}
       </p>
       <!-- Adicionando uma barra divisória -->
-      <hr class="border-t border-gray-500 mb-4"> <!-- Alteração na cor da borda -->
-      <!-- Tags, botões de ação, etc. podem ser adicionados aqui -->
+      <hr class="border-t border-gray-500 mb-4"> 
+      <!-- Tags, botões de ação, etc. podem ser adicionados aqui +-->
+        <!-- Seção de comentários -->
+        <div class="text-gray-300 mt-4">
+          <div class="flex items-center justify-between">
+            <p class="text-sm font-semibold text-white">comments ({post.CommentCount})</p> 
+            <!-- Ícone para expandir -->
+            <button class="text-sm text-blue-500 hover:underline flex items-center"> 
+              <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+              more
+            </button>
+          </div>
+        </div>
+
     </div>
   </div>
-
   </div>
 </div>
 
