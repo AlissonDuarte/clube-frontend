@@ -148,12 +148,12 @@
             <path fill-rule="evenodd" d="M4 9a1 1 0 000 2h8a1 1 0 100-2H4zm4 4a1 1 0 000 2h4a1 1 0 100-2H8z" clip-rule="evenodd"></path>
             <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 011 1v11a1 1 0 01-1 1H4a1 1 0 01-1-1V5zm10 9a1 1 0 100 2H6a1 1 0 100-2h7zM5 11a1 1 0 100 2h6a1 1 0 100-2H5zm2-4a1 1 0 100 2h4a1 1 0 100-2H7z" clip-rule="evenodd"></path>
           </svg>
-          *Image
+          <p>*Image</p>
         </label>
         <input id="fileUpload" type="file" class="hidden" on:change={handleFileChange}>
       </div>
       <div class="flex justify-end">
-        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Create</button>
+        <button type="submit" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Create</button>
       </div>
     </form>
   </div>

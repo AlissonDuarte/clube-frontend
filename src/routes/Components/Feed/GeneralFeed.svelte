@@ -94,19 +94,19 @@
         <!-- Tags, botões de ação, etc. podem ser adicionados aqui +-->
         <!-- Seção de comentários -->
         <div class="text-gray-300 mt-4">
-          <div class="flex items-center justify-between">
-            <p class="text-sm font-semibold text-white">comments ({post.CommentCount})</p> 
-            <!-- Ícone para expandir -->
-            <button class="text-sm text-blue-500 hover:underline flex items-center" on:click={toggleComments}>  
-              <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-              </svg>
-              {#if showComments} less {/if}
-              {#if !showComments} more {/if}
-            </button>
-          </div>
+          <button
+            type="button"
+            class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+            on:click={toggleComments}
+          >
+            Comments ({post.CommentCount})
+          </button>
+          
           {#if showComments}
-            <Comment postID={post.ID} on:close={closeComments} />
+            <div class="mt-4">
+              <!-- Exibir comentários -->
+              <Comment postID={post.ID} on:close={closeComments} />
+            </div>
           {/if}
         </div>
       </div>
