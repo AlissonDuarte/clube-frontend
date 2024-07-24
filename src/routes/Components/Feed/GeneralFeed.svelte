@@ -1,9 +1,9 @@
-<!-- GeneralFeed.svelte -->
 <script>
   import { onMount } from 'svelte';
   import { API_URL_BASE } from '../../../app.js';
+  import Comment from '../Modals/Comment.svelte'
   export let post;
-
+  let showComments = false;
   let userImage = "";
   let hasUserImage = false;
   let postImage = "";
@@ -22,7 +22,7 @@
     });
 
     if (userResponse.ok) {
-      hasUserImage = true
+      hasUserImage = true;
     }
     const userImageBlob = await userResponse.blob();
     userImage = userImageBlob ? URL.createObjectURL(userImageBlob) : 'placeholder_user.jpg'; // Usando placeholder se não houver imagem
@@ -36,11 +36,19 @@
       }
     });
     if (postResponse.ok) {
-      hasPostImage = true
+      hasPostImage = true;
     }
 
     const postImageBlob = await postResponse.blob();
     postImage = postImageBlob ? URL.createObjectURL(postImageBlob) : 'placeholder_post.jpg'; // Usando placeholder se não houver imagem
+  }
+
+  function toggleComments() {
+    showComments = !showComments;
+  }
+
+  function closeComments() {
+    showComments = false;
   }
 
   function hasTags(tags) {
@@ -66,41 +74,42 @@
       </div>
     </div>
     
-  <!-- Conteúdo do post -->
-  <div class="bg-gray-600 rounded-b-lg overflow-hidden shadow-lg flex"> <!-- Aumento do raio de borda -->
-    <!-- Divisão da imagem -->
-    <div class="w-1/3">
-      <!-- Imagem do post -->
-      <img class="w-full h-full object-cover rounded-lg" src={postImage} alt="postImage"> <!-- Aumento do raio de borda -->
-    </div>
-    <!-- Divisão do texto, tags, etc. -->
-    <div class="w-2/3 p-4">
-      <div class="font-bold text-xl text-white mb-2 h-15 overflow-y-auto"> <!-- Defina uma altura fixa -->
-        {post.Title}
+    <!-- Conteúdo do post -->
+    <div class="bg-gray-600 rounded-b-lg overflow-hidden shadow-lg flex"> <!-- Aumento do raio de borda -->
+      <!-- Divisão da imagem -->
+      <div class="w-1/3">
+        <!-- Imagem do post -->
+        <img class="w-full h-full object-cover rounded-lg" src={postImage} alt="postImage"> <!-- Aumento do raio de borda -->
       </div>
-      <p class="text-gray-300 text-base mb-4 h-40 overflow-y-auto"> <!-- Defina uma altura fixa -->
-        {post.Content}
-      </p>
-      <!-- Adicionando uma barra divisória -->
-      <hr class="border-t border-gray-500 mb-4"> 
-      <!-- Tags, botões de ação, etc. podem ser adicionados aqui +-->
+      <!-- Divisão do texto, tags, etc. -->
+      <div class="w-2/3 p-4">
+        <div class="font-bold text-xl text-white mb-2 h-15 overflow-y-auto"> <!-- Defina uma altura fixa -->
+          {post.Title}
+        </div>
+        <p class="text-gray-300 text-base mb-4 h-40 overflow-y-auto"> <!-- Defina uma altura fixa -->
+          {post.Content}
+        </p>
+        <!-- Adicionando uma barra divisória -->
+        <hr class="border-t border-gray-500 mb-4"> 
+        <!-- Tags, botões de ação, etc. podem ser adicionados aqui +-->
         <!-- Seção de comentários -->
         <div class="text-gray-300 mt-4">
           <div class="flex items-center justify-between">
             <p class="text-sm font-semibold text-white">comments ({post.CommentCount})</p> 
             <!-- Ícone para expandir -->
-            <button class="text-sm text-blue-500 hover:underline flex items-center"> 
+            <button class="text-sm text-blue-500 hover:underline flex items-center" on:click={toggleComments}>  
               <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
               </svg>
-              more123
+              {#if showComments} less {/if}
+              {#if !showComments} more {/if}
             </button>
           </div>
+          {#if showComments}
+            <Comment postID={post.ID} on:close={closeComments} />
+          {/if}
         </div>
-
+      </div>
     </div>
   </div>
-  </div>
-
 </div>
-
