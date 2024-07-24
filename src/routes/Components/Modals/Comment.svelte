@@ -116,7 +116,7 @@
         </button>
       </div>
       {#if showNewForm}
-        <NewComment on:submit={handleNewComment} on:close={() => (showNewForm = false)} />
+        <NewComment postID={postID} on:submit={handleNewComment} on:close={() => (showNewForm = false)} />
       {/if}
     </div>
   </div>

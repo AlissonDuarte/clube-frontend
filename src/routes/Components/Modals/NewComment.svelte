@@ -1,15 +1,56 @@
 <script>
     import { createEventDispatcher } from 'svelte';
+    import { API_URL_BASE } from '../../../app';
+
+    export let postID;
+
     let comment = '';
     const maxLength = 500;
     const dispatch = createEventDispatcher();
   
-    const handleSubmit = () => {
-      if (comment.trim()) {
-        dispatch('submit', comment); // Envia o comentário para o componente pai
-        comment = ''; // Limpa o campo após o envio
-      }
-    };
+    async function handleSubmit() {
+        const userJWT = localStorage.getItem("userJWT");
+        if (!userJWT) {
+            console.error("JWT not found in localStorage");
+            return;
+        }
+        
+        const jwt = "Bearer " + userJWT; // Corrigido para garantir que a variável jwt esteja definida
+        
+        const userID = localStorage.getItem("userID");
+        if (!userID) {
+            console.error("User ID not found in localStorage");
+            return;
+        }
+        const postIDInt = parseInt(postID, 10);
+        const userIDInt = parseInt(userID, 10);
+        const jsonBody = JSON.stringify({
+            postID: postIDInt,
+            userID: userIDInt,
+            content: comment
+        });
+
+        try {
+            const response = await fetch(`${API_URL_BASE}/comment`, {
+            headers: {
+                'Authorization': jwt,
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: jsonBody
+            });
+
+            if (!response.ok) {
+            console.error("Failed to submit comment:", await response.text());
+            return;
+            }
+
+            // Limpa o comentário após o envio
+            comment = "";
+        } catch (error) {
+            console.error("Error during fetch:", error);
+        }
+    }
   
     const handleClose = () => {
       dispatch('close'); // Envia um evento para fechar o formulário
@@ -31,10 +72,11 @@
       </div>
       <div class="p-4">
         <textarea
-          bind:value={comment}
-          placeholder="Write your comment here..."
-          class="w-full h-32 p-2 border border-gray-300 rounded-md resize-none"
-          maxLength={maxLength}
+            bind:value={comment}
+            placeholder="Write your comment here..."
+            class="w-full h-32 p-2 border border-gray-300 rounded-md resize-none"
+            style="color: black !important;"
+            maxLength={maxLength}
         ></textarea>
         <div class="flex justify-between items-center mt-2">
           <p class={`text-sm font-medium ${counterColor}`}>
