@@ -1,17 +1,18 @@
 <script>
-  import { API_URL_BASE } from '../../../app.js'
+  import { API_URL_BASE } from '../../../app.js';
 
   export let cards = [];
+  
   // Função para rolar para o próximo slide
-  function nextSlide() {
-    const carousel = document.querySelector('.carousel');
+  function nextSlide(event) {
+    const carousel = event.target.closest('.carousel-container').querySelector('.carousel');
     const scrollAmount = carousel.clientWidth / 4; // Largura do carousel dividida por 4
     carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
   }
 
   // Função para rolar para o slide anterior
-  function prevSlide() {
-    const carousel = document.querySelector('.carousel');
+  function prevSlide(event) {
+    const carousel = event.target.closest('.carousel-container').querySelector('.carousel');
     const scrollAmount = carousel.clientWidth / 4; // Largura do carousel dividida por 4
     carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
   }
@@ -35,20 +36,20 @@
   }
 </script>
 
-<div class="relative">
+<div class="relative carousel-container">
   <div class="carousel w-full overflow-hidden whitespace-nowrap relative">
     {#each cards as card}
-    <div class="carousel-item relative inline-block w-1/6 whitespace-normal p-2"> <!-- Ajuste aqui para um card mais estreito -->
-      <h2 class="card-title text-xl font-semibold text-gray-200 mb-3">{card.Name}</h2>
-      <a href="my-clubs/club/{card.ID}" class="block rounded-lg overflow-hidden shadow-md h-80"> <!-- Ajuste para altura mais proporcional -->
-          <div class="card-content h-full flex flex-col justify-between">
-              {#if card.ID}
-                  {#await handlePictures(card) then clubImage}
-                      <img src={clubImage} alt="Imagem" class="w-full h-full object-contain rounded-lg" /> <!-- Ajuste para não cortar a imagem -->
-                  {/await}
-              {/if}
-          </div>
-      </a>
+    <div class="carousel-item relative inline-block p-4 transition-transform transform hover:scale-105">
+      <div class="card-content bg-gray-800 p-4 rounded-lg h-96 w-64 mx-auto">
+        <h2 class="card-title text-xl font-semibold text-gray-200 mb-3">{card.Name}</h2>
+        <a href="my-clubs/club/{card.ID}" class="block rounded-lg overflow-hidden shadow-md h-60 w-full">
+          {#if card.ID}
+            {#await handlePictures(card) then clubImage}
+              <img src={clubImage} alt="Imagem" class="w-full h-full object-cover rounded-lg border-0" />
+            {/await}
+          {/if}
+        </a>
+      </div>
     </div>
     {/each}
   </div>
@@ -83,14 +84,34 @@
   .carousel-item {
     flex: 0 0 auto;
     scroll-snap-align: start;
-    width: calc(18.66% - 0.5rem); /* Ajusta a largura para caber seis itens */
-    margin-right: 0.5rem;
+    width: auto;
+    margin-right: 1.0rem; /* Aumenta o espaço entre os itens */
+    transition: transform 0.3s ease-in-out; /* Adiciona transição para a transformação */
+  }
+
+  .carousel-item:hover {
+    transform: scale(1.05); /* Aumenta o tamanho do item ao passar o mouse */
   }
 
   .carousel-item img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Ajusta a imagem para caber dentro da div sem cortar */
+    object-fit: cover; /* Ajusta a imagem para cobrir a div sem cortar */
     background-color: transparent; /* Remove o fundo branco */
+    border: 0; /* Remove a borda cinza */
+  }
+
+  .card-title {
+    white-space: normal; /* Permite quebra de linha */
+    overflow: visible; /* Garante que o texto não seja ocultado */
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limita a exibição do texto a 2 linhas */
+    -webkit-box-orient: vertical;
+  }
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 </style>

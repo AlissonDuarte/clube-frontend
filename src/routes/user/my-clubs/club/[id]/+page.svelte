@@ -22,12 +22,12 @@ function getIdFromUrl() {
     }
 }
 let clubID = getIdFromUrl()
+var clubName = ''
 
 let endpointUrl = `club/${clubID}/post`
 
 async function fetchPosts() {
     var userJWT = localStorage.getItem('userJWT');
-    var userID = localStorage.getItem('userID');
 
     const response = await fetch(`${API_URL_BASE}/club/${clubID}/feed?page=${page}&pageSize=${pageSize}`, {
       method: 'GET',
@@ -42,6 +42,33 @@ async function fetchPosts() {
     }
 
     return await response.json();
+}
+
+async function getClubInfo() {
+  var userJWT = localStorage.getItem('userJWT');
+
+  try {
+    console.log("iniciando")
+    const clubInfo = await fetch(`${API_URL_BASE}/club/${clubID}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + userJWT,
+        'Content-Type': 'application/json'
+      }
+    });
+    if (!clubInfo.ok) {
+      clubName = 'Ops, error to find club name x.x';
+      return;
+    }
+
+    const clubInfoData = await clubInfo.json()
+    clubName = clubInfoData.Name
+
+  } catch(error) {
+    clubName = 'Ops, error to find club name x.x';
+    console.log("Error: ", error)
+    return;
+  }
 }
 
 async function fetchMorePosts() {
@@ -60,6 +87,7 @@ async function fetchMorePosts() {
   }
 onMount(() => {
     fetchMorePosts();
+    getClubInfo();
 
     const observer = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting && !loading) {
@@ -79,8 +107,12 @@ onMount(() => {
 </script>
 
 <header>
+  
     <Header />
 </header>
+<div class="bg-blue-800 text-white text-3xl font-bold mb-8 p-4 rounded-lg shadow-lg">
+  {clubName}
+</div>
 
 <body>
   <div class="w-full max-w-xl mx-auto absolute left-1/2 transform -translate-x-1/2 z-50">
