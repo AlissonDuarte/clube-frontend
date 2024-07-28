@@ -4,7 +4,6 @@
   import { API_URL_BASE } from "../../../app";
 
   const dispatch = createEventDispatcher();
-  export let close;
 
   let alertMessage = '';
   let isVisible = false;
