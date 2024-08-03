@@ -66,13 +66,13 @@
 
             const data = await response.json();
 
-            user.Name = data.Name;
-            user.Username = data.Username;
-            user.Email = data.Email;
-            user.Phone = data.Phone;
-            user.Bio = data.Bio;
-            user.birth_date = data.BirthDate;
-            user.Gender = data.Gender;
+            user.Name = data.name;
+            user.Username = data.username;
+            user.Email = data.email;
+            user.Phone = data.phone;
+            user.Bio = data.bio;
+            user.birth_date = data.birthDate;
+            user.Gender = data.gender;
         } catch (error) {
             console.error('Error fetching user data:', error);
             // Handle error (e.g., show a message to the user)

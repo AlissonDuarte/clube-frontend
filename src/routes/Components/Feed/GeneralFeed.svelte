@@ -56,8 +56,8 @@
   }
 
   onMount(() => {
-    const postUserId = post.User.ID; // Acessando o ID do usuário do post
-    const postImageId = post.ImageID; // Acessando o ID da imagem do post
+    const postUserId = post.user.id; // Acessando o ID do usuário do post
+    const postImageId = post.imageID; // Acessando o ID da imagem do post
     handlePictures(postUserId, postImageId);
   });
 </script>
@@ -69,8 +69,8 @@
       <!-- Avatar do usuário -->
       <img class="w-12 h-12 rounded-full mr-4 border-2 border-gray-600" src={userImage} alt="Avatar"> <!-- Alteração na cor da borda -->
       <div>
-        <p class="text-white font-semibold text-lg">{post.User.Name}</p>
-        <p class="text-gray-300">{post.User.Username}</p> <!-- Alteração na cor do texto -->
+        <p class="text-white font-semibold text-lg">{post.user.name}</p>
+        <p class="text-gray-300">{post.user.username}</p> <!-- Alteração na cor do texto -->
       </div>
     </div>
     
@@ -84,10 +84,10 @@
       <!-- Divisão do texto, tags, etc. -->
       <div class="w-2/3 p-4">
         <div class="font-bold text-xl text-white mb-2 h-15 overflow-y-auto"> <!-- Defina uma altura fixa -->
-          {post.Title}
+          {post.title}
         </div>
         <p class="text-gray-300 text-base mb-4 h-40 overflow-y-auto"> <!-- Defina uma altura fixa -->
-          {post.Content}
+          {post.content}
         </p>
         <!-- Adicionando uma barra divisória -->
         <hr class="border-t border-gray-500 mb-4"> 
@@ -99,13 +99,13 @@
             class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
             on:click={toggleComments}
           >
-            Comments ({post.CommentCount})
+            Comments ({post.commentCount})
           </button>
           
           {#if showComments}
             <div class="mt-4">
               <!-- Exibir comentários -->
-              <Comment postID={post.ID} on:close={closeComments} />
+              <Comment postID={post.id} on:close={closeComments} />
             </div>
           {/if}
         </div>
