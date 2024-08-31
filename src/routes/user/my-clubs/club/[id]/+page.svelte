@@ -48,7 +48,6 @@ async function getClubInfo() {
   var userJWT = localStorage.getItem('userJWT');
 
   try {
-    console.log("iniciando")
     const clubInfo = await fetch(`${API_URL_BASE}/club/${clubID}`, {
       method: 'GET',
       headers: {

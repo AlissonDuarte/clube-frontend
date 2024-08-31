@@ -33,7 +33,6 @@
     try {
       const newClubs = await fetchClubs();
       clubs = [...clubs, ...newClubs];
-      console.log("clubs", clubs);
     } catch (error) {
       console.log("Error fetching more clubs: ", error);
     }
@@ -45,7 +44,6 @@
 
   onMount(() => {
     loadPosts();
-    console.log(clubs);
   });
 </script>
 
